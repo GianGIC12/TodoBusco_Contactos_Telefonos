@@ -6,12 +6,20 @@
 
 package conexion;
 
+import com.google.gson.JsonObject;
+import com.mongodb.BasicDBList;
+import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
+import com.mongodb.util.JSON;
+import java.util.ArrayList;
+import java.util.List;
+import jdk.nashorn.internal.parser.JSONParser;
+import org.bson.Document;
 
 /**
  *
@@ -41,20 +49,47 @@ public class Conexion {
         dataBase=mongoC.getDB(bd);
         
         System.out.println("conexion1 exitosa");
-        collection1=dataBase.getCollection("mod_log_cron_republicar");
+        collection1=dataBase.getCollection("mod_statistic_by_announcement");
+        
+        
         
         System.out.println("conexion2 exitosa");
         
-        DBCursor rs= collection1.find();
+        BasicDBObject query= new BasicDBObject("idAviso",11);
+        BasicDBObject fields=new BasicDBObject("statistic",1).append("_id",true);
         
-        int i=0;
-        while(rs.hasNext()&& i<=20){
+        
+        
+         DBCursor cursor= collection1.find(query);
+         
+         
+         
+         while(cursor.hasNext()) {
+             
+          DBObject o= cursor.next();
+             
+             System.out.println(""+o.get("idAviso"));
+             
+            DBObject o2=(DBObject) o.get("statistic");
             
-            DBObject dbo= rs.next();
-            i++;
+             System.out.println(""+o.get("statistic"));
+           
             
-            System.out.println(i+"***"+dbo.get("name"));  
+             System.out.println(""+o2.get("19/07/2017"));
+             
+             DBObject o3=(DBObject) o2.get("32/07/2017");
+             
+             
+             
+      //    JsonObject output= new JsonObject(JSON.serialize(o.get("statistic")));
             
+           
+           
+             
+ 
+             
+         }
+         
             
         } 
         
@@ -62,7 +97,7 @@ public class Conexion {
         
         
         
-    }
+
     
     
     

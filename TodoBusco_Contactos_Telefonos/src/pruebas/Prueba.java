@@ -6,7 +6,10 @@
 
 package pruebas;
 
+import archivos.ExportarCSV;
 import conexion.Conexion;
+import gestion.Consultas;
+import java.io.IOException;
 
 /**
  *
@@ -17,12 +20,25 @@ public class Prueba {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         // TODO code application logic here
         
-        Conexion c= new Conexion();
+        Consultas c= new Consultas();
         
-        c.conectar();
+        String dia="01";
+        String mes="01";
+        String anio="2018";
+        
+        c.obtenerContactabilidad();
+        c.recorrerContactabilidad();
+        c.obtenerContactabilidadMensual(dia,mes,anio);
+        c.recorrerContactabilidad();
+        
+        String idExcel= anio+mes+dia;
+        
+        ExportarCSV e= new ExportarCSV();
+        e.exportarResultados(c.getContactosLista(),idExcel);
+        
         
     }
     
