@@ -6,6 +6,7 @@
 
 package archivos;
 
+import beans.AvisoBean;
 import beans.ContactabilidadBean;
 import com.csvreader.CsvWriter;
 import java.io.File;
@@ -23,7 +24,7 @@ public class ExportarCSV {
     }
     
     
-    public void exportarResultados(List<ContactabilidadBean> contactosLista,String idFecha ) throws IOException{
+    public void exportarResultados(List<AvisoBean> avisos,String idFecha ) throws IOException{
         
     String outputFile = "C:/Users/user/Google Drive/Digital_Balance_TB/Base_Transaccional/bd_Contactabilidad_"+idFecha+".csv";    
         
@@ -43,9 +44,11 @@ public class ExportarCSV {
         csvOutput.write("pais");
         csvOutput.write("portal");
         csvOutput.write("destaque");
-        csvOutput.write("fecha_contacto");
-        csvOutput.write("Categoria");
-        csvOutput.write("SubCategoria");
+        csvOutput.write("fecha_publicacion");
+        csvOutput.write("categoria");
+        csvOutput.write("subCategoria");
+        csvOutput.write("estado");
+        csvOutput.write("fecha_extraccion");
         csvOutput.write("visitas");
         csvOutput.write("contactos");
         csvOutput.write("mensajes");
@@ -54,26 +57,29 @@ public class ExportarCSV {
 
         csvOutput.endRecord();
       
-      for (ContactabilidadBean contacto : contactosLista) {
-          
-           csvOutput.write(contacto.getIdAviso() + "");
-                csvOutput.write(contacto.getIdFecha() + "");
-                csvOutput.write(contacto.getPais() + "");
-                csvOutput.write(contacto.getPortal());
-                csvOutput.write(contacto.getDestaque());
-                csvOutput.write(contacto.getFecha());
-                csvOutput.write(contacto.getCategoria());
-                csvOutput.write(contacto.getSubCategoria());
-                csvOutput.write(contacto.getVisitas()+"");
-                csvOutput.write(contacto.getContactos()+"");
-                csvOutput.write(contacto.getMensajes()+"");
-                csvOutput.write(contacto.getTelefonos()+"");
+      for (AvisoBean aviso : avisos) {
+      
+           csvOutput.write(aviso.getId_Aviso() + "");
+                csvOutput.write(aviso.getId_fecha() + "");
+                csvOutput.write(aviso.getPais() + "");
+                csvOutput.write(aviso.getPortal());
+                csvOutput.write(aviso.getDestaque());
+                csvOutput.write(aviso.getFecha_publicacion());
+                csvOutput.write(aviso.getCategoria());
+                csvOutput.write(aviso.getSubCategoria());
+                csvOutput.write(aviso.getEstado()+"");
+                csvOutput.write(aviso.getFecha_Extraccion()+"");
+                csvOutput.write(aviso.getVisitas()+"");
+                csvOutput.write(aviso.getContactos()+"");
+                csvOutput.write(aviso.getMensajes()+"");
+                csvOutput.write(aviso.getTelefonos()+"");
+                
 
                 csvOutput.endRecord();
           
           
           
-          
+      
       }
      
      

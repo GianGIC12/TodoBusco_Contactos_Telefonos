@@ -7,9 +7,10 @@
 package pruebas;
 
 import archivos.ExportarCSV;
-import conexion.Conexion;
+import conexion.Conexion_Mongo;
 import gestion.Consultas;
 import java.io.IOException;
+import java.sql.SQLException;
 
 /**
  *
@@ -20,10 +21,11 @@ public class Prueba {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, SQLException {
         // TODO code application logic here
-        
-        Consultas c= new Consultas();
+  
+/**        
+       Consultas c= new Consultas();
         
         String dia="01";
         String mes="01";
@@ -31,13 +33,42 @@ public class Prueba {
         
         c.obtenerContactabilidad();
         c.recorrerContactabilidad();
-        c.obtenerContactabilidadMensual(dia,mes,anio);
+        c.obtenerContactabilidadMensual("01","01","2017");
         c.recorrerContactabilidad();
         
         String idExcel= anio+mes+dia;
         
+      //  ExportarCSV e= new ExportarCSV();
+     e.exportarResultados(c.getContactosLista(),idExcel);
+        
+       */
+        
+        
+        Consultas c= new Consultas();
+        
+        System.out.println("******Primer recorrido*****");
+        c.completarAvisos();
+        c.recorrerAvisos();
+        
+        System.out.println("******Segundo recorrido*****");
+        c.obtenerContactabilidadMensual("06", "02","2018");
+        c.recorrerAvisosContactos();
+        
+        
+        String dia="06";
+        String mes="02";
+        String anio="2018";
+        
+        String extraccion=anio+mes+dia;
+        
+        System.out.println("Exportando datos a CSV");
         ExportarCSV e= new ExportarCSV();
-        e.exportarResultados(c.getContactosLista(),idExcel);
+        e.exportarResultados(c.getAvisos(), extraccion);
+        
+        
+        
+        
+        
         
         
     }

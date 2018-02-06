@@ -6,7 +6,7 @@
 
 package pruebas;
 
-import conexion.Conexion;
+import conexion.Conexion_Mongo;
 
 /**
  *
@@ -20,7 +20,7 @@ public class PruebasLetales {
     public static void main(String[] args) {
         // TODO code application logic here
         
-        Conexion c= new Conexion();
+        Conexion_Mongo c= new Conexion_Mongo();
         
         c.conectar();
         

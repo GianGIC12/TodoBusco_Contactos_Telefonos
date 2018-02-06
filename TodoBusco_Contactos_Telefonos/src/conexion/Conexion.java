@@ -3,102 +3,82 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package conexion;
 
-import com.google.gson.JsonObject;
-import com.mongodb.BasicDBList;
-import com.mongodb.BasicDBObject;
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
-import com.mongodb.DBCursor;
-import com.mongodb.DBObject;
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientURI;
-import com.mongodb.util.JSON;
-import java.util.ArrayList;
-import java.util.List;
-import jdk.nashorn.internal.parser.JSONParser;
-import org.bson.Document;
+import com.mysql.jdbc.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 /**
  *
  * @author user
  */
 public class Conexion {
-    
-    MongoClient mongoC;
-    String gestor, bd, user, pass;
-    DB dataBase=null;
-    DBCollection collection1=null;
-    
-    
-    public Conexion() {
-        
-        gestor="mdb.todobusco.com";
-        bd="mdb_todobusco_prod";
-        user="u_todobusco_prod";
-        pass="Shai7te5aesheu";
-     
-    }
-    
-    public void conectar(){
-        System.out.println("mongodb://"+user+":"+pass+"@"+gestor+":27017"+"/"+bd);
-        MongoClientURI uri= new MongoClientURI("mongodb://"+user+":"+pass+"@"+gestor+":27017"+"/"+bd);
-        mongoC=new MongoClient(uri);
-        dataBase=mongoC.getDB(bd);
-        
-        System.out.println("conexion1 exitosa");
-        collection1=dataBase.getCollection("mod_statistic_by_announcement");
-        
-        
-        
-        System.out.println("conexion2 exitosa");
-        
-        BasicDBObject query= new BasicDBObject("idAviso",11);
-        BasicDBObject fields=new BasicDBObject("statistic",1).append("_id",true);
-        
-        
-        
-         DBCursor cursor= collection1.find(query);
-         
-         
-         
-         while(cursor.hasNext()) {
-             
-          DBObject o= cursor.next();
-             
-             System.out.println(""+o.get("idAviso"));
-             
-            DBObject o2=(DBObject) o.get("statistic");
-            
-             System.out.println(""+o.get("statistic"));
-           
-            
-             System.out.println(""+o2.get("19/07/2017"));
-             
-             DBObject o3=(DBObject) o2.get("32/07/2017");
-             
-             
-             
-      //    JsonObject output= new JsonObject(JSON.serialize(o.get("statistic")));
-            
-           
-           
-             
- 
-             
-         }
-         
-            
-        } 
-        
-        
-        
-        
-        
 
-    
-    
-    
+    Connection con;
+    String gestor, bd, user, pass;
+
+    public Conexion() {
+
+        gestor = "db.todobusco.com";
+        bd = "db_todobusco_prod";
+        user = "u_tbusco_des";
+        pass = "UNguphiehaes1a";
+    }
+
+    public void conectar() throws SQLException {
+
+        String url = "jdbc:mysql://" + gestor + ":3306/" + bd;
+
+        con = (Connection) DriverManager.getConnection(url, user, pass);
+
+    }
+
+    public void desconectar() throws SQLException {
+
+        con.close();
+
+    }
+
+    public Connection getCon() {
+        return con;
+    }
+
+    public void setCon(Connection con) {
+        this.con = con;
+    }
+
+    public String getGestor() {
+        return gestor;
+    }
+
+    public void setGestor(String gestor) {
+        this.gestor = gestor;
+    }
+
+    public String getBd() {
+        return bd;
+    }
+
+    public void setBd(String bd) {
+        this.bd = bd;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public String getPass() {
+        return pass;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
+    }
+
 }
