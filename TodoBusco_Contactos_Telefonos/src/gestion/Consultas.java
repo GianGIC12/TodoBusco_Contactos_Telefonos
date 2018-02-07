@@ -47,7 +47,7 @@ public class Consultas {
         objCon.conectar();
 
         sql = "select id,idCategoria,destaque,idPais,created_at,idRepub,idSubcategoria,estado,nombreContacto,emailContacto,tituloAviso,telef01 from db_todobusco_prod.mod_aviso_aviso"
-           +" where fchPublicacion>=created_at  and (estado=2 or estado=11 or estado=12)"     + "  limit 3000";
+           +" where fchPublicacion>=created_at  and (estado=2 or estado=11 or estado=12)" ;
 
         PreparedStatement stm = objCon.getCon().prepareStatement(sql);
 
