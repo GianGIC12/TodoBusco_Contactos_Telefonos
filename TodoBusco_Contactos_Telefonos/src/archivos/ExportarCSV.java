@@ -53,6 +53,13 @@ public class ExportarCSV {
         csvOutput.write("contactos");
         csvOutput.write("mensajes");
         csvOutput.write("telefonos");
+        csvOutput.write("nombreContacto");
+        csvOutput.write("emailContacto");
+        csvOutput.write("tituloAviso");
+        csvOutput.write("telefonoContacto");
+        
+        
+        
         
 
         csvOutput.endRecord();
@@ -73,6 +80,10 @@ public class ExportarCSV {
                 csvOutput.write(aviso.getContactos()+"");
                 csvOutput.write(aviso.getMensajes()+"");
                 csvOutput.write(aviso.getTelefonos()+"");
+                csvOutput.write(aviso.getNombreContacto()+"");
+                csvOutput.write(aviso.getEmailContacto()+"");
+                csvOutput.write(aviso.getTituloAviso()+"");
+                csvOutput.write(aviso.getTelefonoContacto()+"");
                 
 
                 csvOutput.endRecord();

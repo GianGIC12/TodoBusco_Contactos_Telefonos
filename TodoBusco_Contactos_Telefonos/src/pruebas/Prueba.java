@@ -51,11 +51,11 @@ public class Prueba {
         c.recorrerAvisos();
         
         System.out.println("******Segundo recorrido*****");
-        c.obtenerContactabilidadMensual("06", "02","2018");
+        c.obtenerContactabilidadMensual("05", "02","2018");
         c.recorrerAvisosContactos();
         
         
-        String dia="06";
+        String dia="05";
         String mes="02";
         String anio="2018";
         

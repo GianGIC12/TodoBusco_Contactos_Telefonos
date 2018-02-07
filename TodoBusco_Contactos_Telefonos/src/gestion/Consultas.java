@@ -47,7 +47,7 @@ public class Consultas {
         objCon.conectar();
 
         sql = "select id,idCategoria,destaque,idPais,created_at,idRepub,idSubcategoria,estado,nombreContacto,emailContacto,tituloAviso,telef01 from db_todobusco_prod.mod_aviso_aviso"
-           +" where fchPublicacion>=created_at  and created_at>'2018-02-05' "     + "  limit 120000";
+           +" where fchPublicacion>=created_at  and (estado=2 or estado=11 or estado=12)"     + "  limit 3000";
 
         PreparedStatement stm = objCon.getCon().prepareStatement(sql);
 
@@ -975,7 +975,7 @@ public class Consultas {
    mongo.Conectar();
    
    DBCollection coleccion= mongo.getDataBase().getCollection("mod_statistic_by_announcement");
-   
+   BasicDBObject query= new BasicDBObject("idAviso",37331);
    
  
       DBCursor cursor=coleccion.find();
@@ -1874,8 +1874,18 @@ public class Consultas {
    int j=0;
    
       for (AvisoBean aviso: avisos) {
-          
+         
+          String fecha=dia+"/"+mes+"/"+anio;    
+            
           BasicDBObject query= new BasicDBObject("idAviso",aviso.getId_Aviso());
+          BasicDBObject query2=new BasicDBObject("fechaFormat",fecha);
+          List<DBObject> criterio= new ArrayList<>();
+          criterio.add(query);
+        criterio.add(query2);
+        
+        BasicDBObject querys= new BasicDBObject("$and",criterio);
+          
+          
       //    System.out.println(""+contacto.getIdAviso());
          acumContactos=0;
           acumVisitas=0;
@@ -1886,9 +1896,9 @@ public class Consultas {
           System.out.println("Procesando: "+j);
          
               
-   String fecha=dia+"/"+mes+"/"+anio;    
+   
               
-           DBCursor cursor= coleccion.find(query);   
+           DBCursor cursor= coleccion.find(querys);   
               
               
                while(cursor.hasNext()) {
@@ -2000,6 +2010,10 @@ public class Consultas {
           +" Contactos: "+aviso.getContactos()
           +" Telefonos: "+aviso.getTelefonos()
           +" Fecha_Extraccion: "+aviso.getFecha_Extraccion()
+          +" NombreContacto: "+aviso.getNombreContacto()
+          +" EmailContacto: "+aviso.getEmailContacto()
+          +" TituloAviso: "+aviso.getTituloAviso()
+          +" TelefonoContacto: "+aviso.getTelefonoContacto()
                   
           );
 

@@ -55,12 +55,15 @@ public class Conexion_Mongo {
         
         System.out.println("conexion2 exitosa");
         
-        BasicDBObject query= new BasicDBObject("idAviso",11);
-        BasicDBObject fields=new BasicDBObject("statistic",1).append("_id",true);
+        BasicDBObject query= new BasicDBObject("idAviso",37331);
+        BasicDBObject query2=new BasicDBObject("fechaFormat","05/02/2018");
+        List<DBObject> criterio= new ArrayList<>();
+        criterio.add(query);
+        criterio.add(query2);
         
+        BasicDBObject querys= new BasicDBObject("$and",criterio);
         
-        
-         DBCursor cursor= collection1.find(query);
+         DBCursor cursor= collection1.find(querys);
          
          
          
@@ -69,16 +72,9 @@ public class Conexion_Mongo {
           DBObject o= cursor.next();
              
              System.out.println(""+o.get("idAviso"));
-             
-            DBObject o2=(DBObject) o.get("statistic");
-            
-             System.out.println(""+o.get("statistic"));
-           
-            
-             System.out.println(""+o2.get("19/07/2017"));
-             
-             DBObject o3=(DBObject) o2.get("32/07/2017");
-             
+             System.out.println(""+o.get("idPais"));
+             System.out.println(""+o.get("destaque"));           
+             System.out.println(""+o.get("visitas"));
              
              
       //    JsonObject output= new JsonObject(JSON.serialize(o.get("statistic")));
