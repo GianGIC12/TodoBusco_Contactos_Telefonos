@@ -15,9 +15,31 @@ public class AvisoBean {
     String portal, destaque, pais, fecha_publicacion, categoria, subCategoria;
     String estado;
     String fecha_Extraccion;
-    int visitas,contactos,mensajes,telefonos;
-    String nombreContacto,emailContacto,tituloAviso,telefonoContacto;
-    
+    int visitas, contactos, mensajes, telefonos;
+    String nombreContacto, emailContacto, tituloAviso, telefonoContacto;
+    int idPerfil;
+
+    public AvisoBean(int id_Aviso, int id_fecha, String portal, String destaque, String pais, String fecha_publicacion, String categoria, String subCategoria, String estado, String fecha_Extraccion, int visitas, int contactos, int mensajes, int telefonos, String nombreContacto, String emailContacto, String tituloAviso, String telefonoContacto, int idPerfil) {
+        this.id_Aviso = id_Aviso;
+        this.id_fecha = id_fecha;
+        this.portal = portal;
+        this.destaque = destaque;
+        this.pais = pais;
+        this.fecha_publicacion = fecha_publicacion;
+        this.categoria = categoria;
+        this.subCategoria = subCategoria;
+        this.estado = estado;
+        this.fecha_Extraccion = fecha_Extraccion;
+        this.visitas = visitas;
+        this.contactos = contactos;
+        this.mensajes = mensajes;
+        this.telefonos = telefonos;
+        this.nombreContacto = nombreContacto;
+        this.emailContacto = emailContacto;
+        this.tituloAviso = tituloAviso;
+        this.telefonoContacto = telefonoContacto;
+        this.idPerfil = idPerfil;
+    }
 
     public AvisoBean(int id_Aviso, int id_fecha, String portal, String destaque, String pais, String fecha_publicacion) {
         this.id_Aviso = id_Aviso;
@@ -175,6 +197,12 @@ public class AvisoBean {
         this.telefonoContacto = telefonoContacto;
     }
 
+    public int getIdPerfil() {
+        return idPerfil;
+    }
 
-    
+    public void setIdPerfil(int idPerfil) {
+        this.idPerfil = idPerfil;
+    }
+
 }

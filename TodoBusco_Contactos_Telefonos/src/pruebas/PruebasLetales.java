@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package pruebas;
 
 import conexion.Conexion_Mongo;
@@ -19,22 +18,20 @@ public class PruebasLetales {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        
-        Conexion_Mongo c= new Conexion_Mongo();
-        
+
+        Conexion_Mongo c = new Conexion_Mongo();
+
         c.conectar();
-        
-        
+
         for (int i = 1; i < 32; i++) {
-            System.out.println(""+i);
+            System.out.println("" + i);
         }
-        
-        
-        String fecha="01/08/2017";
-        
-        String aux=fecha.substring(6,10)+fecha.substring(3,5)+fecha.substring(0,2);
-        System.out.println(""+aux);
-        
+
+        String fecha = "01/08/2017";
+
+        String aux = fecha.substring(6, 10) + fecha.substring(3, 5) + fecha.substring(0, 2);
+        System.out.println("" + aux);
+
     }
-    
+
 }

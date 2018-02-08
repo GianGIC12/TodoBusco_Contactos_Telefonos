@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package conexion;
 
 import com.mongodb.DB;
@@ -16,38 +15,34 @@ import com.mongodb.MongoClientURI;
  * @author user
  */
 public class Conexion_2 {
-    
-     MongoClient mongoC;
+
+    MongoClient mongoC;
     String gestor, bd, user, pass;
-    DB dataBase=null;
-    DBCollection collection1=null;
+    DB dataBase = null;
+    DBCollection collection1 = null;
 
     public Conexion_2() {
-    
-     gestor="mdb.todobusco.com";
-        bd="mdb_todobusco_prod";
-        user="u_todobusco_prod";
-        pass="Shai7te5aesheu";
-    
-    
+
+        gestor = "mdb.todobusco.com";
+        bd = "mdb_todobusco_prod";
+        user = "u_todobusco_prod";
+        pass = "Shai7te5aesheu";
+
     }
-    
-   public void Conectar(){
-       
-     MongoClientURI uri= new MongoClientURI("mongodb://"+user+":"+pass+"@"+gestor+":27017"+"/"+bd);
-        mongoC=new MongoClient(uri);
-        dataBase=mongoC.getDB(bd);   
-       
-       
-   }
-   
-   
-   public void Desconectar(){
-       
-       mongoC.close();
-       
-       
-   }
+
+    public void Conectar() {
+
+        MongoClientURI uri = new MongoClientURI("mongodb://" + user + ":" + pass + "@" + gestor + ":27017" + "/" + bd);
+        mongoC = new MongoClient(uri);
+        dataBase = mongoC.getDB(bd);
+
+    }
+
+    public void Desconectar() {
+
+        mongoC.close();
+
+    }
 
     public MongoClient getMongoC() {
         return mongoC;
@@ -104,6 +99,5 @@ public class Conexion_2 {
     public void setCollection1(DBCollection collection1) {
         this.collection1 = collection1;
     }
-   
-    
+
 }

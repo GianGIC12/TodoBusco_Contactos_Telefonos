@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package gestion;
 
 import beans.AuxBean;
@@ -27,42 +26,42 @@ import java.util.List;
  */
 public class Consultas {
 
-    Conexion_2 mongo;   
+    Conexion_2 mongo;
     List<ContactabilidadBean> contactosLista;
-    int acumVisitas,acumContactos,acumTelefonos,acumMensajes;
+    int acumVisitas, acumContactos, acumTelefonos, acumMensajes;
     List<AvisoBean> avisos;
     String sql;
     List<Integer> repetidos;
-    
+
     public Consultas() {
-   contactosLista= new ArrayList<ContactabilidadBean>();
-    avisos = new ArrayList<AvisoBean>();
-    repetidos = new ArrayList<Integer>();
-    
+        contactosLista = new ArrayList<ContactabilidadBean>();
+        avisos = new ArrayList<AvisoBean>();
+        repetidos = new ArrayList<Integer>();
+
     }
-    
+
     public void completarAvisos() throws SQLException {
-        
-         Conexion objCon = new Conexion();
+
+        Conexion objCon = new Conexion();
         objCon.conectar();
 
-        sql = "select id,idCategoria,destaque,idPais,created_at,idRepub,idSubcategoria,estado,nombreContacto,emailContacto,tituloAviso,telef01 from db_todobusco_prod.mod_aviso_aviso"
-           +" where fchPublicacion>=created_at  and (estado=2 or estado=11 or estado=12)" ;
+        sql = "select id,idCategoria,destaque,idPais,fchPublicacion,idRepub,idSubcategoria,estado,nombreContacto,emailContacto,tituloAviso,telef01,idPerfil from db_todobusco_prod.mod_aviso_aviso"
+                + " where fchPublicacion>=created_at  and (estado=2 or estado=11 or estado=12)" + " Limit 10 ";
 
         PreparedStatement stm = objCon.getCon().prepareStatement(sql);
 
         ResultSet rs = stm.executeQuery();
-        
-         while (rs.next()) {
-             
-              int id = rs.getInt("id");
+
+        while (rs.next()) {
+
+            int id = rs.getInt("id");
             int idCategoria = rs.getInt("idCategoria");
             int idSubCategoria = rs.getInt("idSubcategoria");
             String portal = "";
             String categoria = "";
             String subCategoria = "";
-             
-             switch (idCategoria) {
+
+            switch (idCategoria) {
 
                 case 1:
                     categoria = "Inmuebles";
@@ -147,9 +146,8 @@ public class Consultas {
                     break;
 
             }
-             
-             
-             switch (idSubCategoria) {
+
+            switch (idSubCategoria) {
 
                 case 1:
                     subCategoria = "Apartamentos";
@@ -820,9 +818,8 @@ public class Consultas {
                     break;
 
             }
-             
-            
-             if (idCategoria == 1) {
+
+            if (idCategoria == 1) {
 
                 portal = "CasaTB";
 
@@ -857,8 +854,8 @@ public class Consultas {
                 destaque = "Destaque Membresia";
 
             }
-             
-             int idPais = rs.getInt("idPais");
+
+            int idPais = rs.getInt("idPais");
 
             String pais = "No Definido";
 
@@ -888,10 +885,9 @@ public class Consultas {
 
                 pais = "Peru";
 
-            } 
-             
-            
-            String fecha = rs.getString("created_at").substring(0, 10);
+            }
+
+            String fecha = rs.getString("fchPublicacion").substring(0, 10);
 
             String aux = fecha.substring(0, 4) + fecha.substring(5, 7) + fecha.substring(8, 10);
 
@@ -902,43 +898,68 @@ public class Consultas {
             AuxBean auxB = new AuxBean();
 
             auxB.setIdRep(idRep);
-            
-             if (auxB != null) {
+
+            if (auxB != null) {
 
                 repetidos.add(idRep);
 
             }
-             
-             
-           String estado="";  
-             
-             int id_estado=rs.getInt("estado");
-             
-              switch (id_estado) {
-                  case 0: estado="Despublicado";break;
-                  case 1: estado="Publicado";break;
-                  case 2: estado="Caducado";break;
-                  case 3: estado="Eliminado";break;
-                  case 4: estado="Pendiente de Pago";break;
-                  case 5: estado="Moderado";break;    
-                  case 6: estado="De baja";break;    
-                  case 7: estado="Vendido";break;    
-                  case 8: estado="Pendiente de edicion";break;
-                   case 9: estado="Eliminacion Total";break;   
-                  case 10: estado="Republicacion Automatica";break;    
-                  case 11: estado="Republicacion Manual";break;    
-                  default:
+
+            String estado = "";
+
+            int id_estado = rs.getInt("estado");
+
+            switch (id_estado) {
+                case 0:
+                    estado = "Despublicado";
+                    break;
+                case 1:
+                    estado = "Publicado";
+                    break;
+                case 2:
+                    estado = "Caducado";
+                    break;
+                case 3:
+                    estado = "Eliminado";
+                    break;
+                case 4:
+                    estado = "Pendiente de Pago";
+                    break;
+                case 5:
+                    estado = "Moderado";
+                    break;
+                case 6:
+                    estado = "De baja";
+                    break;
+                case 7:
+                    estado = "Vendido";
+                    break;
+                case 8:
+                    estado = "Pendiente de edicion";
+                    break;
+                case 9:
+                    estado = "Eliminacion Total";
+                    break;
+                case 10:
+                    estado = "Republicacion Automatica";
+                    break;
+                case 11:
+                    estado = "Republicacion Manual";
+                    break;
+                default:
                     estado = "No Definido";
                     break;
-                      
-              }
-             
-              String nombreContacto=rs.getString("nombreContacto");
-              String emailContacto= rs.getString("emailContacto");
-              String tituloAviso=rs.getString("tituloAviso");
-              String telefonoContacto=rs.getString("telef01");
-            
-              AvisoBean aviso = new AvisoBean();
+
+            }
+
+            String nombreContacto = rs.getString("nombreContacto");
+            String emailContacto = rs.getString("emailContacto");
+            String tituloAviso = rs.getString("tituloAviso");
+            String telefonoContacto = rs.getString("telef01");
+
+            int idPerfil = rs.getInt("idPerfil");
+
+            AvisoBean aviso = new AvisoBean();
 
             aviso.setId_Aviso(id);
             aviso.setId_fecha(id_fecha);
@@ -949,59 +970,115 @@ public class Consultas {
             aviso.setCategoria(categoria);
             aviso.setSubCategoria(subCategoria);
             aviso.setEstado(estado);
-            
+
             aviso.setNombreContacto(nombreContacto);
             aviso.setEmailContacto(emailContacto);
             aviso.setTituloAviso(tituloAviso);
             aviso.setTelefonoContacto(telefonoContacto);
-            
+
+            aviso.setIdPerfil(idPerfil);
+
             avisos.add(aviso);
 
-         }
-        
-        
-         objCon.desconectar();
-        
-        
-        
+        }
+
+        objCon.desconectar();
+
     }
-    
-  
-    
-  public void obtenerContactabilidad(){
-      
-   mongo= new Conexion_2();
-   
-   mongo.Conectar();
-   
-   DBCollection coleccion= mongo.getDataBase().getCollection("mod_statistic_by_announcement");
-   BasicDBObject query= new BasicDBObject("idAviso",37331);
-   
- 
-      DBCursor cursor=coleccion.find();
-      
-      cursor.sort(new BasicDBObject("idAviso", -1));
-      
-      int i=0;
-     while(cursor.hasNext() && i<100){
-         i++;
-         DBObject dbo=cursor.next();
-         
-         int idAviso = Integer.parseInt(dbo.get("idAviso").toString());
-         int idPais= Integer.parseInt(dbo.get("idPais").toString());
-         int idPortal=Integer.parseInt(dbo.get("idPortal").toString());
-         int idCategoria=Integer.parseInt(dbo.get("idCategoria").toString());
-         int idSubCategoria=Integer.parseInt(dbo.get("idSubCategoria").toString());
-         int idDestaque=Integer.parseInt(dbo.get("destaque").toString());
-         int visitas=0;
-         int contactos=0;
-         int mensajes=0;
-         int telefonos=0;
-         
-        
-                    
-         
-         String pais = "No Definido";
+
+    public void completarEmail() throws SQLException {
+
+        Conexion objCon = new Conexion();
+        objCon.conectar();
+
+        int i = 0;
+        for (AvisoBean aviso : avisos) {
+            i++;
+            sql = "select b.email from db_todobusco_prod.mod_usuario_perfil as a "
+                    + " join db_todobusco_prod.mod_usuario_usuario as b on a.idUser=b.id "
+                    + "  where a.id=" + aviso.getIdPerfil();
+            System.out.println("completando: " + i);
+
+            PreparedStatement stm = objCon.getCon().prepareStatement(sql);
+
+            ResultSet rs = stm.executeQuery();
+
+            while (rs.next()) {
+
+                String email = rs.getString("email");
+
+                aviso.setEmailContacto(email);
+
+            }
+
+        }
+
+        objCon.desconectar();
+
+    }
+
+    public void repararEmail(List<AvisoBean> avisosE) throws SQLException {
+
+        Conexion objCon = new Conexion();
+        objCon.conectar();
+
+        int i = 0;
+        for (AvisoBean aviso : avisosE) {
+            i++;
+            sql = "select b.email from db_todobusco_prod.mod_usuario_perfil as a "
+                    + " join db_todobusco_prod.mod_usuario_usuario as b on a.idUser=b.id "
+                    + " join db_todobusco_prod.mod_aviso_aviso as c on c.idPerfil=a.id"
+                    + "  where c.id=" + aviso.getId_Aviso();
+            System.out.println("Reparando: " + i);
+
+            PreparedStatement stm = objCon.getCon().prepareStatement(sql);
+
+            ResultSet rs = stm.executeQuery();
+
+            while (rs.next()) {
+
+                String email = rs.getString("email");
+
+                aviso.setEmailContacto(email);
+
+            }
+
+        }
+
+        objCon.desconectar();
+
+    }
+
+    public void obtenerContactabilidad() {
+
+        mongo = new Conexion_2();
+
+        mongo.Conectar();
+
+        DBCollection coleccion = mongo.getDataBase().getCollection("mod_statistic_by_announcement");
+        BasicDBObject query = new BasicDBObject("idAviso", 37331);
+
+        DBCursor cursor = coleccion.find();
+
+        cursor.sort(new BasicDBObject("idAviso", -1));
+
+        int i = 0;
+        while (cursor.hasNext() && i < 100) {
+            i++;
+            DBObject dbo = cursor.next();
+
+            int idAviso = Integer.parseInt(dbo.get("idAviso").toString());
+            int idPais = Integer.parseInt(dbo.get("idPais").toString());
+            int idPortal = Integer.parseInt(dbo.get("idPortal").toString());
+            int idCategoria = Integer.parseInt(dbo.get("idCategoria").toString());
+            int idSubCategoria = Integer.parseInt(dbo.get("idSubCategoria").toString());
+            int idDestaque = Integer.parseInt(dbo.get("destaque").toString());
+            int visitas = 0;
+            int contactos = 0;
+            int mensajes = 0;
+            int telefonos = 0;
+
+            String pais = "No Definido";
 
             if (idPais == 13) {
                 pais = "Bolivia";
@@ -1030,10 +1107,10 @@ public class Consultas {
                 pais = "Peru";
 
             }
-         
-            String portal="No definido";
-         
-          if (idCategoria == 1) {
+
+            String portal = "No definido";
+
+            if (idCategoria == 1) {
 
                 portal = "CasaTB";
 
@@ -1046,10 +1123,10 @@ public class Consultas {
                 portal = "VentaTB";
 
             }
-         
-         String categoria="No Definido";
-         
-          switch (idCategoria) {
+
+            String categoria = "No Definido";
+
+            switch (idCategoria) {
 
                 case 1:
                     categoria = "Inmuebles";
@@ -1134,10 +1211,10 @@ public class Consultas {
                     break;
 
             }
-         
-         String subCategoria="No Definido";
-         
-           switch (idSubCategoria) {
+
+            String subCategoria = "No Definido";
+
+            switch (idSubCategoria) {
 
                 case 1:
                     subCategoria = "Apartamentos";
@@ -1808,14 +1885,12 @@ public class Consultas {
                     break;
 
             }
-         
-         String destaque="No Definido";
-         
-         int destaqueSQL= idDestaque;
-         
-         
-         
-          if (destaqueSQL == 1) {
+
+            String destaque = "No Definido";
+
+            int destaqueSQL = idDestaque;
+
+            if (destaqueSQL == 1) {
 
                 destaque = "....";
 
@@ -1832,200 +1907,158 @@ public class Consultas {
                 destaque = "....";
 
             }
-         
-         ContactabilidadBean contacto= new ContactabilidadBean();
-         
-         contacto.setIdAviso(idAviso);
-         contacto.setPais(pais);
-         contacto.setPortal(portal);
-         contacto.setCategoria(categoria);
-         contacto.setSubCategoria(subCategoria);
-         contacto.setDestaque(destaque);
-         contacto.setVisitas(visitas);
-         contacto.setContactos(contactos);
-         contacto.setMensaje(mensajes);
-         contacto.setTelefonos(telefonos);
-         
-         contactosLista.add(contacto);
-         
-         
-         System.out.println("**********"+i);
-             
 
-         
-  
-     } 
-      
-      
-     mongo.Desconectar();
-      
-      
-  }  
-  
-  
-  public void obtenerContactabilidadMensual(String dia,String mes,String anio){
-      
-   mongo= new Conexion_2();
-   
-   mongo.Conectar();
-   
-   DBCollection coleccion= mongo.getDataBase().getCollection("mod_statistic_by_announcement");
-   
-   int j=0;
-   
-      for (AvisoBean aviso: avisos) {
-         
-          String fecha=dia+"/"+mes+"/"+anio;    
-            
-          BasicDBObject query= new BasicDBObject("idAviso",aviso.getId_Aviso());
-          BasicDBObject query2=new BasicDBObject("fechaFormat",fecha);
-          List<DBObject> criterio= new ArrayList<>();
-          criterio.add(query);
-        criterio.add(query2);
-        
-        BasicDBObject querys= new BasicDBObject("$and",criterio);
-          
-          
-      //    System.out.println(""+contacto.getIdAviso());
-         acumContactos=0;
-          acumVisitas=0;
-          acumTelefonos=0; 
-          acumMensajes=0;
-          
-          j++;
-          System.out.println("Procesando: "+j);
-         
-              
-   
-              
-           DBCursor cursor= coleccion.find(querys);   
-              
-              
-               while(cursor.hasNext()) {
-               
-               DBObject dbo= cursor.next();
-               
-               
-                                   
-                   if (dbo!=null) {
-                       
-                  acumVisitas=acumVisitas+Integer.parseInt(dbo.get("visitas")+"");
-                  acumMensajes=acumMensajes+Integer.parseInt(dbo.get("mensajes")+"");
-                  acumContactos=acumContactos+Integer.parseInt(dbo.get("contactos")+"");
-                  acumTelefonos=acumTelefonos+Integer.parseInt(dbo.get("seephone")+"");
-                   }
+            ContactabilidadBean contacto = new ContactabilidadBean();
 
-               
-           }
-              
+            contacto.setIdAviso(idAviso);
+            contacto.setPais(pais);
+            contacto.setPortal(portal);
+            contacto.setCategoria(categoria);
+            contacto.setSubCategoria(subCategoria);
+            contacto.setDestaque(destaque);
+            contacto.setVisitas(visitas);
+            contacto.setContactos(contactos);
+            contacto.setMensaje(mensajes);
+            contacto.setTelefonos(telefonos);
 
-        aviso.setVisitas(acumVisitas);
-          aviso.setContactos(acumContactos);
-    aviso.setTelefonos(acumTelefonos);
-    aviso.setFecha_Extraccion(fecha);
-    
-    String aux=fecha.substring(6,10)+fecha.substring(3,5)+fecha.substring(0,2);
-    int id_fecha= Integer.parseInt(aux);
-    aviso.setId_fecha(id_fecha);
-    
-    
-        
+            contactosLista.add(contacto);
+
+            System.out.println("**********" + i);
+
+        }
+
+        mongo.Desconectar();
+
+    }
+
+    public void obtenerContactabilidadMensual(String dia, String mes, String anio) {
+
+        mongo = new Conexion_2();
+
+        mongo.Conectar();
+
+        DBCollection coleccion = mongo.getDataBase().getCollection("mod_statistic_by_announcement");
+
+        int j = 0;
+
+        for (AvisoBean aviso : avisos) {
+
+            String fecha = dia + "/" + mes + "/" + anio;
+
+            BasicDBObject query = new BasicDBObject("idAviso", aviso.getId_Aviso());
+            BasicDBObject query2 = new BasicDBObject("fechaFormat", fecha);
+            List<DBObject> criterio = new ArrayList<>();
+            criterio.add(query);
+            criterio.add(query2);
+
+            BasicDBObject querys = new BasicDBObject("$and", criterio);
+
+            //    System.out.println(""+contacto.getIdAviso());
+            acumContactos = 0;
+            acumVisitas = 0;
+            acumTelefonos = 0;
+            acumMensajes = 0;
+
+            j++;
+            System.out.println("Procesando: " + j);
+
+            DBCursor cursor = coleccion.find(querys);
+
+            while (cursor.hasNext()) {
+
+                DBObject dbo = cursor.next();
+
+                if (dbo != null) {
+
+                    acumVisitas = acumVisitas + Integer.parseInt(dbo.get("visitas") + "");
+                    acumMensajes = acumMensajes + Integer.parseInt(dbo.get("mensajes") + "");
+                    acumContactos = acumContactos + Integer.parseInt(dbo.get("contactos") + "");
+                    acumTelefonos = acumTelefonos + Integer.parseInt(dbo.get("seephone") + "");
+                }
+
+            }
+
+            aviso.setVisitas(acumVisitas);
+            aviso.setContactos(acumContactos);
+            aviso.setTelefonos(acumTelefonos);
+            aviso.setFecha_Extraccion(fecha);
+
+            String aux = fecha.substring(6, 10) + fecha.substring(3, 5) + fecha.substring(0, 2);
+            int id_fecha = Integer.parseInt(aux);
+            aviso.setId_fecha(id_fecha);
+
     //      System.out.println("**Acum: "+contacto.getIdAviso());
-    
-          
-      }
-   
-     mongo.Desconectar();
-      
-  }
-  
-  
-  
-  
-  public void recorrerContactabilidad(){
-      
-      int j=0;
-      for (ContactabilidadBean contacto: contactosLista) {
-          
-          System.out.println("idAviso: " +contacto.getIdAviso()
-           +" Pais: "+contacto.getPais()
-          +" Portal: "+contacto.getPortal()
-          +" Categoria: "+contacto.getCategoria()
-          +" SubCategoria: "+contacto.getSubCategoria()
-          +" Destaque: "+contacto.getDestaque()
-          +" Visitas: "+contacto.getVisitas()
-          +" Contactos: "+contacto.getContactos()
-          +" Mensajes: "+contacto.getMensaje()
-          +" Telefonos: "+contacto.getTelefonos());
-          
-          
-          
-      }
-      
-      
-      
-  }
-  
-  
-  public void recorrerAvisos(){
-      
-      for (AvisoBean aviso: avisos) {
-          
-          
-          System.out.println("idAviso: " +aviso.getId_Aviso()
-           +" Pais: "+aviso.getPais()
-          +" Portal: "+aviso.getPortal()
-          +" Categoria: "+aviso.getCategoria()
-          +" SubCategoria: "+aviso.getSubCategoria()
-          +" Destaque: "+aviso.getDestaque()
-          +" Id_Fecha: "+aviso.getId_fecha()
-          +" Fecha: "+aviso.getFecha_publicacion()
-          +" Estado: "+aviso.getEstado());
+        }
 
-          
-      }
-      
-      
-      
-      
-  }
-  
-  public void recorrerAvisosContactos(){
-      
-      
-       for (AvisoBean aviso: avisos) {
-          
-          
-          System.out.println("idAviso: " +aviso.getId_Aviso()
-           +" Pais: "+aviso.getPais()
-          +" Portal: "+aviso.getPortal()
-          +" Categoria: "+aviso.getCategoria()
-          +" SubCategoria: "+aviso.getSubCategoria()
-          +" Destaque: "+aviso.getDestaque()
-          +" Id_Fecha: "+aviso.getId_fecha()
-          +" Fecha: "+aviso.getFecha_publicacion()
-          +" Estado: "+aviso.getEstado()
-          +" Visitas: "+aviso.getVisitas()
-          +" Mensajes: "+aviso.getMensajes()
-          +" Contactos: "+aviso.getContactos()
-          +" Telefonos: "+aviso.getTelefonos()
-          +" Fecha_Extraccion: "+aviso.getFecha_Extraccion()
-          +" NombreContacto: "+aviso.getNombreContacto()
-          +" EmailContacto: "+aviso.getEmailContacto()
-          +" TituloAviso: "+aviso.getTituloAviso()
-          +" TelefonoContacto: "+aviso.getTelefonoContacto()
-                  
-          );
+        mongo.Desconectar();
 
-          
-      }
-      
-      
-      
-      
-      
-      
-  }
+    }
+
+    public void recorrerContactabilidad() {
+
+        int j = 0;
+        for (ContactabilidadBean contacto : contactosLista) {
+
+            System.out.println("idAviso: " + contacto.getIdAviso()
+                    + " Pais: " + contacto.getPais()
+                    + " Portal: " + contacto.getPortal()
+                    + " Categoria: " + contacto.getCategoria()
+                    + " SubCategoria: " + contacto.getSubCategoria()
+                    + " Destaque: " + contacto.getDestaque()
+                    + " Visitas: " + contacto.getVisitas()
+                    + " Contactos: " + contacto.getContactos()
+                    + " Mensajes: " + contacto.getMensaje()
+                    + " Telefonos: " + contacto.getTelefonos());
+
+        }
+
+    }
+
+    public void recorrerAvisos() {
+
+        for (AvisoBean aviso : avisos) {
+
+            System.out.println("idAviso: " + aviso.getId_Aviso()
+                    + " Pais: " + aviso.getPais()
+                    + " Portal: " + aviso.getPortal()
+                    + " Categoria: " + aviso.getCategoria()
+                    + " SubCategoria: " + aviso.getSubCategoria()
+                    + " Destaque: " + aviso.getDestaque()
+                    + " Id_Fecha: " + aviso.getId_fecha()
+                    + " Fecha: " + aviso.getFecha_publicacion()
+                    + " Estado: " + aviso.getEstado());
+
+        }
+
+    }
+
+    public void recorrerAvisosContactos() {
+
+        for (AvisoBean aviso : avisos) {
+
+            System.out.println("idAviso: " + aviso.getId_Aviso()
+                    + " Pais: " + aviso.getPais()
+                    + " Portal: " + aviso.getPortal()
+                    + " Categoria: " + aviso.getCategoria()
+                    + " SubCategoria: " + aviso.getSubCategoria()
+                    + " Destaque: " + aviso.getDestaque()
+                    + " Id_Fecha: " + aviso.getId_fecha()
+                    + " Fecha: " + aviso.getFecha_publicacion()
+                    + " Estado: " + aviso.getEstado()
+                    + " Visitas: " + aviso.getVisitas()
+                    + " Mensajes: " + aviso.getMensajes()
+                    + " Contactos: " + aviso.getContactos()
+                    + " Telefonos: " + aviso.getTelefonos()
+                    + " Fecha_Extraccion: " + aviso.getFecha_Extraccion()
+                    + " NombreContacto: " + aviso.getNombreContacto()
+                    + " EmailContacto: " + aviso.getEmailContacto()
+                    + " TituloAviso: " + aviso.getTituloAviso()
+                    + " TelefonoContacto: " + aviso.getTelefonoContacto()
+            );
+
+        }
+
+    }
 
     public Conexion_2 getMongo() {
         return mongo;
@@ -2098,13 +2131,5 @@ public class Consultas {
     public void setRepetidos(List<Integer> repetidos) {
         this.repetidos = repetidos;
     }
-  
-  
-  
-  
-  
-  
-  
-  
-    
+
 }

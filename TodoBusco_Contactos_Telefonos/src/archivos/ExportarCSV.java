@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package archivos;
 
 import beans.AvisoBean;
@@ -22,24 +21,21 @@ public class ExportarCSV {
 
     public ExportarCSV() {
     }
-    
-    
-    public void exportarResultados(List<AvisoBean> avisos,String idFecha ) throws IOException{
-        
-    String outputFile = "C:/Users/user/Google Drive/Digital_Balance_TB/Base_Transaccional/bd_Contactabilidad_"+idFecha+".csv";    
-        
-     boolean alreadyExists = new File(outputFile).exists();    
-        
-      
-     if (alreadyExists) {
+
+    public void exportarResultados(List<AvisoBean> avisos, String idFecha) throws IOException {
+
+        String outputFile = "C:/Users/user/Google Drive/Digital_Balance_TB/Base_Transaccional/bd_Contactabilidad_" + idFecha + ".csv";
+
+        boolean alreadyExists = new File(outputFile).exists();
+
+        if (alreadyExists) {
             File bd_contactabilidad_creada = new File(outputFile);
             bd_contactabilidad_creada.delete();
         }
-     
-     
-      CsvWriter csvOutput = new CsvWriter(new FileWriter(outputFile, true), ';');
-     
-      csvOutput.write("id_aviso");
+
+        CsvWriter csvOutput = new CsvWriter(new FileWriter(outputFile, true), ';');
+
+        csvOutput.write("id_aviso");
         csvOutput.write("id_fecha");
         csvOutput.write("pais");
         csvOutput.write("portal");
@@ -57,49 +53,36 @@ public class ExportarCSV {
         csvOutput.write("emailContacto");
         csvOutput.write("tituloAviso");
         csvOutput.write("telefonoContacto");
-        
-        
-        
-        
 
         csvOutput.endRecord();
-      
-      for (AvisoBean aviso : avisos) {
-      
-           csvOutput.write(aviso.getId_Aviso() + "");
-                csvOutput.write(aviso.getId_fecha() + "");
-                csvOutput.write(aviso.getPais() + "");
-                csvOutput.write(aviso.getPortal());
-                csvOutput.write(aviso.getDestaque());
-                csvOutput.write(aviso.getFecha_publicacion());
-                csvOutput.write(aviso.getCategoria());
-                csvOutput.write(aviso.getSubCategoria());
-                csvOutput.write(aviso.getEstado()+"");
-                csvOutput.write(aviso.getFecha_Extraccion()+"");
-                csvOutput.write(aviso.getVisitas()+"");
-                csvOutput.write(aviso.getContactos()+"");
-                csvOutput.write(aviso.getMensajes()+"");
-                csvOutput.write(aviso.getTelefonos()+"");
-                csvOutput.write(aviso.getNombreContacto()+"");
-                csvOutput.write(aviso.getEmailContacto()+"");
-                csvOutput.write(aviso.getTituloAviso()+"");
-                csvOutput.write(aviso.getTelefonoContacto()+"");
-                
 
-                csvOutput.endRecord();
-          
-          
-          
-      
-      }
-     
-     
-       csvOutput.close();  
-        
+        for (AvisoBean aviso : avisos) {
+
+            csvOutput.write(aviso.getId_Aviso() + "");
+            csvOutput.write(aviso.getId_fecha() + "");
+            csvOutput.write(aviso.getPais() + "");
+            csvOutput.write(aviso.getPortal());
+            csvOutput.write(aviso.getDestaque());
+            csvOutput.write(aviso.getFecha_publicacion());
+            csvOutput.write(aviso.getCategoria());
+            csvOutput.write(aviso.getSubCategoria());
+            csvOutput.write(aviso.getEstado() + "");
+            csvOutput.write(aviso.getFecha_Extraccion() + "");
+            csvOutput.write(aviso.getVisitas() + "");
+            csvOutput.write(aviso.getContactos() + "");
+            csvOutput.write(aviso.getMensajes() + "");
+            csvOutput.write(aviso.getTelefonos() + "");
+            csvOutput.write(aviso.getNombreContacto() + "");
+            csvOutput.write(aviso.getEmailContacto() + "");
+            csvOutput.write(aviso.getTituloAviso() + "");
+            csvOutput.write(aviso.getTelefonoContacto() + "");
+
+            csvOutput.endRecord();
+
+        }
+
+        csvOutput.close();
+
     }
-    
-    
-    
-    
-    
+
 }
