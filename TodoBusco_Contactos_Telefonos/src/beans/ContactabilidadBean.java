@@ -15,6 +15,7 @@ public class ContactabilidadBean {
     int idFecha;
     String pais, portal, categoria, subCategoria, destaque;
     int visitas, contactos, mensajes, telefonos;
+    int calls,whatsapp;
     String fecha;
 
     public ContactabilidadBean() {
@@ -124,4 +125,22 @@ public class ContactabilidadBean {
         this.idFecha = idFecha;
     }
 
+    public int getCalls() {
+        return calls;
+    }
+
+    public void setCalls(int calls) {
+        this.calls = calls;
+    }
+
+    public int getWhatsapp() {
+        return whatsapp;
+    }
+
+    public void setWhatsapp(int whatsapp) {
+        this.whatsapp = whatsapp;
+    }
+
+  
+    
 }

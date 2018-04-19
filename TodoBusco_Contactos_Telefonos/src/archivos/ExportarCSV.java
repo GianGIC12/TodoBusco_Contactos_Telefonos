@@ -24,7 +24,7 @@ public class ExportarCSV {
 
     public void exportarResultados(List<AvisoBean> avisos, String idFecha) throws IOException {
 
-        String outputFile = "C:/Users/user/Google Drive/Digital_Balance_TB/Base_Transaccional/bd_Contactabilidad_" + idFecha + ".csv";
+        String outputFile = "C:/Users/user/Google Drive/Digital_Balance_TB/Base_Transaccional_2/bd_Contactabilidad_" + idFecha + ".csv";
 
         boolean alreadyExists = new File(outputFile).exists();
 
@@ -53,7 +53,9 @@ public class ExportarCSV {
         csvOutput.write("emailContacto");
         csvOutput.write("tituloAviso");
         csvOutput.write("telefonoContacto");
-
+        csvOutput.write("calls");
+        csvOutput.write("whatsapp");
+        
         csvOutput.endRecord();
 
         for (AvisoBean aviso : avisos) {
@@ -76,6 +78,8 @@ public class ExportarCSV {
             csvOutput.write(aviso.getEmailContacto() + "");
             csvOutput.write(aviso.getTituloAviso() + "");
             csvOutput.write(aviso.getTelefonoContacto() + "");
+            csvOutput.write(aviso.getCalls() + "");
+            csvOutput.write(aviso.getWhatsapp() + "");
 
             csvOutput.endRecord();
 

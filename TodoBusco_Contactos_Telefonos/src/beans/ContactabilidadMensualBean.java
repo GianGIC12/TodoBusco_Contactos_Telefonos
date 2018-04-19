@@ -14,6 +14,7 @@ public class ContactabilidadMensualBean {
     int idAviso;
     String pais, portal, categoria, subCategoria, destaque;
     int visitas, contactos, mensajes, telefonos;
+    int calls,whatsapp;
     String mes;
 
     public ContactabilidadMensualBean() {
@@ -106,5 +107,23 @@ public class ContactabilidadMensualBean {
     public void setMes(String mes) {
         this.mes = mes;
     }
+
+    public int getCalls() {
+        return calls;
+    }
+
+    public void setCalls(int calls) {
+        this.calls = calls;
+    }
+
+    public int getWhatsapp() {
+        return whatsapp;
+    }
+
+    public void setWhatsapp(int whatsapp) {
+        this.whatsapp = whatsapp;
+    }
+    
+    
 
 }

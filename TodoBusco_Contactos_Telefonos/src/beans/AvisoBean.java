@@ -15,7 +15,7 @@ public class AvisoBean {
     String portal, destaque, pais, fecha_publicacion, categoria, subCategoria;
     String estado;
     String fecha_Extraccion;
-    int visitas, contactos, mensajes, telefonos;
+    int visitas, contactos, mensajes, telefonos,calls,whatsapp;
     String nombreContacto, emailContacto, tituloAviso, telefonoContacto;
     int idPerfil;
 
@@ -205,4 +205,24 @@ public class AvisoBean {
         this.idPerfil = idPerfil;
     }
 
+    public int getCalls() {
+        return calls;
+    }
+
+    public void setCalls(int calls) {
+        this.calls = calls;
+    }
+
+    public int getWhatsapp() {
+        return whatsapp;
+    }
+
+    public void setWhatsapp(int whatsapp) {
+        this.whatsapp = whatsapp;
+    }
+
+    
+    
+    
+    
 }

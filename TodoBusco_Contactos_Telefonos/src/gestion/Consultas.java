@@ -28,7 +28,7 @@ public class Consultas {
 
     Conexion_2 mongo;
     List<ContactabilidadBean> contactosLista;
-    int acumVisitas, acumContactos, acumTelefonos, acumMensajes;
+    int acumVisitas, acumContactos, acumTelefonos, acumMensajes,acumCalls,acumWhatsapp;
     List<AvisoBean> avisos;
     String sql;
     List<Integer> repetidos;
@@ -1958,6 +1958,8 @@ public class Consultas {
             acumVisitas = 0;
             acumTelefonos = 0;
             acumMensajes = 0;
+            acumCalls=0;
+            acumWhatsapp=0;
 
             j++;
             System.out.println("Procesando: " + j);
@@ -1974,6 +1976,9 @@ public class Consultas {
                     acumMensajes = acumMensajes + Integer.parseInt(dbo.get("mensajes") + "");
                     acumContactos = acumContactos + Integer.parseInt(dbo.get("contactos") + "");
                     acumTelefonos = acumTelefonos + Integer.parseInt(dbo.get("seephone") + "");
+                    acumCalls = acumCalls + Integer.parseInt(dbo.get("call") + "");
+                    acumWhatsapp = acumWhatsapp + Integer.parseInt(dbo.get("whastapp") + "");
+                    
                 }
 
             }
@@ -1981,6 +1986,8 @@ public class Consultas {
             aviso.setVisitas(acumVisitas);
             aviso.setContactos(acumContactos);
             aviso.setTelefonos(acumTelefonos);
+           aviso.setCalls(acumCalls);
+           aviso.setWhatsapp(acumWhatsapp);
             aviso.setFecha_Extraccion(fecha);
 
             String aux = fecha.substring(6, 10) + fecha.substring(3, 5) + fecha.substring(0, 2);
